@@ -470,10 +470,9 @@ return function(Iris: Types.Iris): Types.Internal
         table.freeze(arguments)
 
         local lastWidget = Internal._lastVDOM[ID]
-        if lastWidget and widgetType == lastWidget.type then
-            -- found a matching widget from last frame.
-            if Internal._refreshCounter > 0 then
-                -- we are redrawing every widget.
+        if lastWidget then
+            if Internal._refreshCounter > 0 or widgetType ~= lastWidget.type then
+                -- every widget is being redrawn, or this widget type has changed
                 Internal._DiscardWidget(lastWidget)
                 lastWidget = nil
             end
