@@ -40,17 +40,14 @@ def path_to_varname(path):
     return "_iris_" + rel
 
 def resolve_require(inner, current_file):
-    """
-    Given the contents of require(...), and the file it came from,
-    return the varname it should resolve to — or None if not a script require.
-    """
     inner = inner.strip()
     if not inner.startswith("script"):
         return None
 
-    current_dir = os.path.dirname(current_file).replace("\\", "/")
+    current_file = current_file.replace("\\", "/")
+    current_dir = "/".join(current_file.split("/")[:-1])
+
     parts = inner.split(".")
-    # parts[0] == "script", rest are navigation
     resolved_dir = current_dir
 
     i = 1
@@ -58,9 +55,9 @@ def resolve_require(inner, current_file):
     while i < len(parts):
         part = parts[i]
         if part == "Parent":
-            resolved_dir = os.path.dirname(resolved_dir).replace("\\", "/")
+            parent = "/".join(resolved_dir.split("/")[:-1])
+            resolved_dir = parent if parent else "lib"  # ← the fix
         else:
-            # everything from here is the module name / subpath
             name_parts = parts[i:]
             break
         i += 1
@@ -76,12 +73,18 @@ def resolve_require(inner, current_file):
     ]
 
     for c in candidates:
-        # normalize away any ./ or double slashes
-        c = os.path.normpath(c).replace("\\", "/")
-        if c in FILES:
-            return path_to_varname(c)
+        parts_c = []
+        for seg in c.split("/"):
+            if seg == "..":
+                if parts_c: parts_c.pop()
+            elif seg and seg != ".":
+                parts_c.append(seg)
+        normalized = "/".join(parts_c)
+        if normalized in FILES:
+            return path_to_varname(normalized)
 
     return None
+
 
 def bundle():
     out = []
@@ -106,6 +109,8 @@ def bundle():
 
         # Find and replace all require(...) calls
         pattern = re.compile(r'require\(([^)]+)\)')
+
+
 
         def replacer(match):
             inner = match.group(1)

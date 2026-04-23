@@ -9,7 +9,7 @@ assert(game:GetService('RunService'):IsClient(), 'Iris must run on the client')
 -- ────────────────────────────────────────────────────────────
 local _iris_PubTypes = (function()
     local script = { Name = "PubTypes.lua" }
-    local Types = require(script.Parent.Types)
+    local Types = _iris_Types
     
     export type ID = Types.ID
     export type State<T> = Types.State<T>
@@ -59,7 +59,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_Types = (function()
     local script = { Name = "Types.lua" }
-    local WidgetTypes = require(script.Parent.WidgetTypes)
+    local WidgetTypes = _iris_WidgetTypes
     
     export type ID = WidgetTypes.ID
     export type State<T> = WidgetTypes.State<T>
@@ -1566,7 +1566,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_Internal = (function()
     local script = { Name = "Internal.lua" }
-    local Types = require(script.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Iris): Types.Internal
         --[=[
@@ -2468,7 +2468,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_API = (function()
     local script = { Name = "API.lua" }
-    local Types = require(script.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Iris)
         -- basic wrapper for nearly every widget, saves space.
@@ -4562,7 +4562,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Root = (function()
     local script = { Name = "Root.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         local NumNonWindowChildren: number = 0
@@ -4712,7 +4712,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Window = (function()
     local script = { Name = "Window.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         local function relocateTooltips()
@@ -5794,7 +5794,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Menu = (function()
     local script = { Name = "Menu.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         local AnyMenuOpen = false
@@ -6400,7 +6400,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Format = (function()
     local script = { Name = "Format.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         --stylua: ignore
@@ -6547,7 +6547,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Text = (function()
     local script = { Name = "Text.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         --stylua: ignore
@@ -6686,7 +6686,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Button = (function()
     local script = { Name = "Button.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         local abstractButton = {
@@ -6783,7 +6783,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Checkbox = (function()
     local script = { Name = "Checkbox.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         --stylua: ignore
@@ -6905,7 +6905,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_RadioButton = (function()
     local script = { Name = "RadioButton.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         --stylua: ignore
@@ -7038,7 +7038,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Input = (function()
     local script = { Name = "Input.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     type InputDataTypes = "Num" | "Vector2" | "Vector3" | "UDim" | "UDim2" | "Color3" | "Color4" | "Rect" | "Enum" | "" | string
     type InputType = "Input" | "Drag" | "Slider"
@@ -8277,7 +8277,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Combo = (function()
     local script = { Name = "Combo.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         --stylua: ignore
@@ -8776,7 +8776,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Tree = (function()
     local script = { Name = "Tree.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         local abstractTree = {
@@ -9070,7 +9070,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Table = (function()
     local script = { Name = "Table.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     -- Tables need an overhaul.
     
@@ -9709,7 +9709,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Tab = (function()
     local script = { Name = "Tab.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         local function openTab(TabBar: Types.TabBar, Index: number)
@@ -10049,7 +10049,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Plot = (function()
     local script = { Name = "Plot.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         -- stylua: ignore
@@ -10695,7 +10695,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_widgets_Image = (function()
     local script = { Name = "Image.lua" }
-    local Types = require(script.Parent.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Internal, widgets: Types.WidgetUtility)
         local abstractImage = {
@@ -11311,7 +11311,7 @@ end)()
 -- ────────────────────────────────────────────────────────────
 local _iris_demoWindow = (function()
     local script = { Name = "demoWindow.lua" }
-    local Types = require(script.Parent.Types)
+    local Types = _iris_Types
     
     return function(Iris: Types.Iris)
         local showMainWindow = Iris.State(true)
