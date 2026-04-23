@@ -94,7 +94,7 @@ def bundle():
         with open(filepath, "r", encoding="utf-8") as f:
             src = f.read()
 
-        src = strip_comments(src)
+        # src = strip_comments(src)
 
         def replacer(match):
             resolved = resolve_require(match.group(1), filepath)
